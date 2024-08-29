@@ -1,0 +1,84 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Recommendations{% endblock title %}
+
+{% block main-content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>Recommended Items</h1>
+            <form action="{% url 'recommend_foods' %}" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="user_input" required class="form-control form-control-lg" placeholder="Search for anything you're craving right now." value="{{ user_input }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        
+        {% if same_category_recommendations %}
+        <div class="row">
+            <div class="col-12">
+                <h1 style="color: #b22222; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 50px;">Find your perfect food match with {{ user_input }}!</h1>
+            </div>
+            {% for recommendation in same_category_recommendations %}
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'product-detail' pk=recommendation.pk %}" class="card-link" style="text-decoration: none; color: black;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ recommendation.image_title }}" alt="" style="height: 280px; object-fit: cover;">
+                        <div class="card-body">
+                            <h3 class="name-style mb-0" style="height: 40px; overflow: hidden; text-overflow: ellipsis; text-transform: capitalize;">{{ recommendation.food_name }}</h3>
+                            <h5 class="name-style mb-0" style="height: 40px; overflow: hidden; text-overflow: ellipsis;">Rs. {{ recommendation.price }}</h5>
+                            <p class="name-style mb-0">{{ recommendation.sub_category }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% comment %} <form action="/add-to-cart" class="d-inline">
+                    <input type="hidden" name="prod_id" value="{{ product.id }}" />
+                    <button type="submit" class="btn btn-danger shadow px-4 py-2">Add to cart</button>
+                </form> {% endcomment %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if recommendations %}
+        <div class="row">
+            <div class="col-12">
+                <h1 style="color: #b22222; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 30px;">Also Try this..</h1>
+            </div>
+            {% for recommendation in recommendations %}
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'product-detail' pk=recommendation.pk %}" class="card-link" style="text-decoration: none; color: black;">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ recommendation.image_title }}" alt="" style="height: 280px; object-fit: cover;">
+                        <div class="card-body">
+                            <h3 class="name-style" style="height: 30px; overflow: hidden; text-overflow: ellipsis; text-transform: capitalize;">{{ recommendation.food_name }}</h3>
+                            <h5 class="name-style" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">Rs. {{ recommendation.price }}</h5>
+                            <p class="name-style" style="text-transform: capitalize;">{{ recommendation.food_category }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <br><br><br>
+    </div>
+</div>
+{% endblock main-content %}
+
+{% block extracss %}
+    <style>
+        #main-footer {
+            {% comment %} position: fixed; {% endcomment %}
+            bottom: 0;
+            width: 100%;
+             
+            {% comment %} background-color: #f8f9fa; /* Adjust background color as needed */
+            padding: 10px 0; /* Adjust padding as needed */
+            /* Add any other custom styles for the fixed footer */ {% endcomment %}
+        }
+    </style>
+{% endblock extracss %}  

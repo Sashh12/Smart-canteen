@@ -1,0 +1,70 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block banner-slider %}
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="{% url "menu" %}"><img src="{% static 'app/images/homepage/banner/b1.png'%}" class="d-block w-100" alt="banner image">
+        </a>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/homepage/banner/b2.png'%}" class="d-block w-100" alt="banner image">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/homepage/banner/b3.png'%}" class="d-block w-100" alt="banner image">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/homepage/banner/b4.png'%}" class="d-block w-100" alt="banner image">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% endblock banner-slider %}
+
+{% block information %}
+<div class="container">
+  <div class="row bg.danger-subtle text-center p-5 text-black border-bottom shadow" style="text-align: justify;">
+      <small class=fs-6 style="margin-bottom: 20px;"> Delicious and affordable meals at <b>Sfit Food Adda</b>, your go-to spot for culinary satisfaction on campus. 🍴</small>
+      <small class=fs-5> What is the Purpose of Smart Canteen?🤔</small>
+      <p>                                                       
+      </p>
+      <small class=fs-6 style="text-align: justify;">The purpose of "Smart Canteen"🍽️ is to enhance your dining experience by offering personalized meals tailored to your tastes and dietary preferences, ensuring every bite delights!💫 Additionally, it allows users to conveniently place orders and enjoy meals on the go!🚶‍♂️🚶‍♀️</small>
+  </div>
+</div>
+{% endblock information %}
+
+
+{% block main-content %}
+<h1 style="text-align:center">Welcome to Smart Canteen</h1>
+  <div class="container">
+    <div class="row">
+      {% if recommendations1 %}
+        <h1 style="color: #b22222; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 50px; margin-bottom: 30px;">Have a taste on!</h1>
+        {% for recommendation in recommendations1 %}
+          <div class="col-md-3 mb-4">
+            <a href="{% url 'product-detail' pk=recommendation.pk %}" class="card-link" style="text-decoration: none; color: black;">
+              <div class="card">
+                <img class="card-img-top" src="{{ recommendation.Image }}" alt="" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                  <h3 class="name-style" style="height: 70px; overflow: hidden; text-overflow: ellipsis; text-transform: capitalize;">{{ recommendation.food_name }}</h3>
+                  <p class="name-style" style="text-transform: capitalize;">{{ recommendation.food_category }}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+<br></br>
+<br></br>
+{% endblock main-content %}

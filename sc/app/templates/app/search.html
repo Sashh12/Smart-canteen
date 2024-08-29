@@ -1,0 +1,28 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Search Result{% endblock title %}
+
+{% block main-content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <h1 style="color: #b22222; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 50px;">You searched for {{query}}</h1>
+      </div>
+      {% for prod in products %}
+        <div class="col mb-4"> <!-- Removed box-shadow -->
+            <a href="{% url 'product-detail' prod.id %}" class="btn">
+                <div>
+                    <img src="{{ prod.Image }}" width="250px" height="250px"/>
+                    <div class="fw-bold">{{ prod.food_name }}</div>
+                    <div class="fw-bold text-danger" style="margin-bottom: 10px;"> <!-- Added margin-bottom -->
+                        Rs.{{ prod.price }}/-
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br></br>
+{% endblock main-content %}
+
